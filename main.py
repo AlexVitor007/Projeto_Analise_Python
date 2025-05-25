@@ -22,7 +22,7 @@ def menu_analise_temporal():
         analise_temporal.comparativo_anual()
     else:
         print("Opção inválida.")
-        
 if __name__ == "__main__":
-    print("=== Sistema ClassicModels Analytics ===")
+    print("=== Sistema Análise ClassicModels ===")
     menu()
+

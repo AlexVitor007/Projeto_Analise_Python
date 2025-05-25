@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import mysql.connector
 
 
-# 🔌 Conectar ao MySQL
+#  Conectar ao MySQL
 def conectar_mysql():
     conexao = mysql.connector.connect(
         host="localhost",
@@ -14,7 +14,7 @@ def conectar_mysql():
     return conexao
 
 
-# 🔄 Carregar dados das tabelas necessárias
+#  Carregar dados das tabelas necessárias
 def carregar_dados():
     conexao = conectar_mysql()
 
@@ -25,7 +25,7 @@ def carregar_dados():
     conexao.close()
 
     if pedidos.empty or detalhes.empty or produtos.empty:
-        print("❌ Erro: Uma ou mais tabelas estão vazias.")
+        print(" Erro: Uma ou mais tabelas estão vazias.")
         return pd.DataFrame(), pd.DataFrame()
 
     dados = pd.merge(detalhes, produtos, on="productCode")
@@ -34,21 +34,52 @@ def carregar_dados():
     return dados, produtos
 
 
-# 📊 Histórico de preços
+#  Histórico de preços
 def historico_precos():
     dados, _ = carregar_dados()
-    df = dados.groupby(['orderDate', 'productName'])['priceEach'].mean().reset_index()
-    tabela = df.pivot(index='orderDate', columns='productName', values='priceEach')
-    tabela.plot(figsize=(12,6))
-    plt.title("Histórico de Preços por Produto")
-    plt.xlabel("Data")
-    plt.ylabel("Preço Médio")
-    plt.legend(bbox_to_anchor=(1, 1))
+
+# Calcular o preço médio por produto
+    media_precos = dados.groupby('productName')['priceEach'].mean()
+
+    # Selecionar os 20 primeiros produtos
+    media_precos_20 = media_precos.head(20)
+
+    # Calcular a soma dos preços médios
+    soma_precos = media_precos_20.sum()
+
+    # Plotar gráfico de pizza sem labels diretamente nas fatias
+    plt.figure(figsize=(10, 10))
+    wedges, texts, autotexts = plt.pie(
+        media_precos_20,
+        labels=None,
+        autopct='%1.1f%%',
+        startangle=140
+    )
+
+    # Criar legenda ao lado da pizza
+    plt.legend(
+        wedges,
+        media_precos_20.index,
+        title="Produtos",
+        loc="center left",
+        bbox_to_anchor=(1, 0, 0.5, 1),
+        fontsize='small'
+    )
+
+    # Adicionar texto com a soma dos preços médios abaixo da legenda
+    plt.text(
+        1.15, -0.4,  # posição ajustada à direita e abaixo
+        f"Soma dos preços médios: ${soma_precos:.2f}",
+        fontsize=10,
+        ha='left'
+    )
+
+    plt.title('Distribuição do Preço Médio dos 20 Produtos')
+    plt.axis('equal')  # pizza redonda
     plt.tight_layout()
     plt.show()
-
-
-# 📦 Estoque médio ao longo do tempo
+    
+    
 def estoque_medio_temporal():
     dados, produtos = carregar_dados()
     produtos = produtos.set_index('productCode')
@@ -61,7 +92,7 @@ def estoque_medio_temporal():
     plt.show()
 
 
-# 🔄 Média móvel de vendas (30 dias)
+#  Média móvel de vendas (30 dias)
 def media_movel_vendas():
     dados, _ = carregar_dados()
     vendas = dados.groupby('orderDate')['quantityOrdered'].sum()
@@ -73,7 +104,7 @@ def media_movel_vendas():
     plt.show()
 
 
-# 📅 Sazonalidade trimestral
+#  Sazonalidade trimestral
 def sazonalidade_trimestral():
     dados, _ = carregar_dados()
     dados['Trimestre'] = dados['orderDate'].dt.to_period('Q')
@@ -85,7 +116,7 @@ def sazonalidade_trimestral():
     plt.show()
 
 
-# 📈 Comparativo anual
+#  Comparativo anual
 def comparativo_anual():
     dados, _ = carregar_dados()
     dados['Ano'] = dados['orderDate'].dt.year

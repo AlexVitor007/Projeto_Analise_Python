@@ -14,11 +14,11 @@ root['clientes'] = []
 
 for _, linha in df.iterrows():
     cliente = Cliente(
-        id=linha['customerNumber'],
-        nome=linha['customerName'],
-        telefone=linha['phone'],
-        cidade=linha['city'],
-        pais=linha['country']
+        id=linha['Numero'],
+        nome=linha['Nome'],
+        telefone=linha['Telefone'],
+        cidade=linha['Cidade'],
+        pais=linha['País']
     )
     root['clientes'].append(cliente)
 

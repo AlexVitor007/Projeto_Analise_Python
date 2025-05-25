@@ -9,6 +9,8 @@ def conectar_mysql():
         password="12345",
         database="classicmodels"
     )
+    
+    
 
 # Comando reutilizável para carregar qualquer tabela
 def carregar_tabela(nome_tabela):

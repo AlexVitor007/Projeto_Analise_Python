@@ -11,11 +11,11 @@ def menu():
 
         if opcao == "1":
             from scripts.importar_mysql import carregar_clientes
-            print(carregar_clientes().head())
+            print(carregar_clientes().head(15))
 
         elif opcao == "2":
             from scripts.importar_mysql import carregar_pedidos
-            print(carregar_pedidos().head())
+            print(carregar_pedidos().head(15))
 
         elif opcao == "3":
             from visualizacoes.tendencias import gerar_grafico

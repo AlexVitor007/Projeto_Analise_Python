@@ -20,8 +20,16 @@ def carregar_tabela(nome_tabela):
     return df
 
 # Comandos úteis (exemplos prontos)
+# Função que carrega os clientes da tabela do MySQL
 def carregar_clientes():
-    return carregar_tabela("customers")
+    conexao = conectar_mysql()
+
+    # Carrega todos os clientes e ordena do maior ID para o menor (clientes mais novos no topo)
+    df = pd.read_sql("SELECT * FROM customers ORDER BY customerNumber DESC", conexao)
+
+    conexao.close()
+    return df
+    
 
 def carregar_pedidos():
     return carregar_tabela("orders")

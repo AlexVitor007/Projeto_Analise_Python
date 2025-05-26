@@ -7,3 +7,7 @@ class Cliente(Persistent):
         self.telefone = telefone
         self.cidade = cidade
         self.pais = pais
+
+
+    def __repr__(self):
+        return f"{self.nome} - {self.telefone} - {self.cidade}, {self.pais}"

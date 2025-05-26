@@ -5,7 +5,8 @@ def menu():
         print("2. Mostrar pedidos")
         print("3. Gráfico de vendas")
         print("4. Análises Temporais de Preço e Estoque")
-        print("5. Sair")
+        print("5. Inserir novo cliente")
+        print("6. Sair")
 
         opcao = input("Escolha uma opção: ")
 
@@ -25,7 +26,13 @@ def menu():
             from main import menu_analise_temporal
             menu_analise_temporal()
             
-
         elif opcao == "5":
+            # Importa a função de inserção
+            from scripts.inserir_clientes import inserir_cliente_mysql
+
+            # Chama a função para inserir um cliente via teclado
+            inserir_cliente_mysql()
+
+        elif opcao == "6":
             print("Saindo...")
             break

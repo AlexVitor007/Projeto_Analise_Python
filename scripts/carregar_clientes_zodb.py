@@ -15,7 +15,7 @@ root['clientes'] = []
 
 for _, row in clientes_df.iterrows():
     cliente = Cliente(row['customerNumber'], row['customerName'], row['phone'], row['city'], row['country'])
-    root['clientes'].append(cliente)
+    root['clientes'].append(cliente) # conversão em objeto
     
 
 

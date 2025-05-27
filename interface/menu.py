@@ -4,7 +4,7 @@ mongo = MongoManager()
 def menu():
     while True:
         print("\n=== MENU PRINCIPAL ===")
-        print("1. Mostrar primeiros clientes")
+        print("1. Mostrar clientes")
         print("2. Mostrar pedidos")
         print("3. Gráfico de vendas")
         print("4. Análises Temporais de Preço e Estoque")
@@ -17,11 +17,11 @@ def menu():
 
         if opcao == "1":
             from scripts.importar_mysql import carregar_clientes
-            print(carregar_clientes().head(15))
+            print(carregar_clientes().head(25))
 
         elif opcao == "2":
             from scripts.importar_mysql import carregar_pedidos
-            print(carregar_pedidos().head(15))
+            print(carregar_pedidos().head(25))
 
         elif opcao == "3":
             from visualizacoes.tendencias import gerar_grafico

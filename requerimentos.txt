@@ -5,7 +5,3 @@ ZODB
 mongoengine
 pymongo
 
-
-informações importantes: o mysql é local e com a base de dados importada
-venv ativa para instalação e bash para clone
-instalar mongo por fora
